@@ -1,0 +1,162 @@
+<% layout('./layouts/boilerplate')%>
+
+    <div class="jumbotron">
+        <h1 class="display-4"></h1>
+        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
+            featured content or information.</p>
+        <hr class="my-4">
+        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+    </div>
+    <div class="container-div">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Product ID</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Brand</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(let i of myInventory) { %>
+                    <tr>
+                        <th scope="row">
+                            <%=i.pid%>
+                        </th>
+                        <td>
+                            <%=i.product%>
+                        </td>
+                        <td>
+                            <%=i.brand%>
+                        </td>
+                        <td>
+                            <%=i.quantity%>
+                        </td>
+                        <td>
+                            <%=i.price%>
+                        </td>
+                        <td>
+                            <div class="d-flex justify-content-between">
+                                <button class="btn btn-sm btn-warning ml-5" data-bs-toggle="modal"
+                                    data-bs-target="#editModal<%=i.pid%>" onclick="myFunc()">
+                                    Edit
+                                </button>
+                                <form action="/inventory/<%=i._id%>?_method=DELETE" method="POST">
+                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    <div class="modal fade" id="editModal<%=i.pid%>" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/inventory/<%=i._id%>?_method=PUT" method="POST" novalidate
+                                        class="validated-form">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="mb-3">
+                                                    <label for="pId" class="form-label">Product ID</label>
+                                                    <input type="number" name="inventory[pid]" value="<%=i.pid%>"
+                                                        class="form-control" id="pId" placeholder="Product ID" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-8">
+                                                <div class="mb-3">
+                                                    <label for="pname" class="form-label">Product Name</label>
+                                                    <input type="text" name="inventory[product]" value="<%=i.product%>"
+                                                        class="form-control" id="pname" placeholder="Product Name"
+                                                        required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="Brand" class="form-label">Brand Name</label>
+                                            <input type="text" name="inventory[brand]" value="<%=i.brand%>"
+                                                class="form-control" id="Brand" placeholder="Product Name" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="Quantity" class="form-label">Quantity</label>
+                                            <input type="number" name="inventory[quantity]" value="<%=i.quantity%>"
+                                                class="form-control" id="Quantity" placeholder="Product Name" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="Price" class="form-label">Price</label>
+                                            <input type="number" name="inventory[price]" value="<%=i.price%>"
+                                                class="form-control" id="Price" placeholder="Product Name" required>
+                                        </div>
+                                        <button class="btn btn-sm btn-primary">Edit Product</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex justify-content-evenly w-50 m-auto mb-5">
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#newModal">
+            Add Product
+        </button>
+        <button class="btn btn-primary">
+            Download XLSX
+        </button>
+    </div>
+
+
+    <!-- Edit -->
+    <div class="modal fade" id="newModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/inventory" method="POST" novalidate class="validated-form">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="mb-3">
+                                    <label for="pId" class="form-label">Product ID</label>
+                                    <input type="number" name="inventory[pid]" class="form-control" id="pId"
+                                        placeholder="Product ID" required>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="mb-3">
+                                    <label for="pname" class="form-label">Product Name</label>
+                                    <input type="text" name="inventory[product]" class="form-control" id="pname"
+                                        placeholder="Product Name" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Brand" class="form-label">Brand Name</label>
+                            <input type="text" name="inventory[brand]" class="form-control" id="Brand"
+                                placeholder="Product Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Quantity" class="form-label">Quantity</label>
+                            <input type="number" name="inventory[quantity]" class="form-control" id="Quantity"
+                                placeholder="Product Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Price" class="form-label">Price</label>
+                            <input type="number" name="inventory[price]" class="form-control" id="Price"
+                                placeholder="Product Name" required>
+                        </div>
+                        <button class="btn btn-sm btn-primary">Add Product</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

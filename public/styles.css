@@ -1,0 +1,24 @@
+.container-div {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.table{
+    width: 50%;
+    text-align: center;
+    background-color: aliceblue;
+}
+
+.header {
+    margin: auto;
+    color: aliceblue;
+}
+
+.jumbotron {
+    padding: 4rem 2rem;
+    margin-bottom: 2rem;
+    background-color: var(--bs-light);
+    border-radius: .3rem;  
+}
