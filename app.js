@@ -63,7 +63,7 @@ app.delete('/inventory/:id', catchAsync(async (req, res) => {
     res.redirect('/')
 }))
 
-app.get('/downloadxlsx',catchAsync (async (req, res) => {
+app.post('/downloadxlsx',catchAsync (async (req, res) => {
     const inventory = await collection.find().toArray()
     const xls = json2xls(inventory)
     fs.writeFileSync("inventoryData.xlsx", xls, 'binary', (err) => {
